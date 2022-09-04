@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from "react";
-import axios, { request } from "./axios";
+import React, { useState } from "react";
+
+import MovieList from "./components/MovieList";
 
 const App = () => {
-  useEffect(() => {
-    (async () => {
-      const response = await axios.get(request);
-      console.log(response.data.results);
-    })();
-  }, []);
-
   const [input, setInput] = useState("");
 
   return (
     <div>
-      <div className="flex justify-between items-center p-7 bg-slate-800">
+      <div className="flex justify-center md:justify-between items-center p-7 bg-slate-800">
         <img
           src="https://bit.ly/3wXPyzv"
           alt="logo"
           className="w-10 h-10 hidden md:inline-block"
         />
-        <div className="bg-white flex-grow md:flex-grow-0 rounded-md px-3 space-x-3 py-2 flex ietms-center justify-evenly">
+        <div className="bg-white rounded-md px-3 space-x-3 py-2 flex ietms-center justify-evenly">
           <svg
             fill="#000000"
             xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +25,7 @@ const App = () => {
           </svg>
           <div>
             <input
-              className="flex-grow font-bold bg-transparent outline-none w-64 border-r-2"
+              className="flex-grow font-bold bg-transparent outline-none md:w-64 border-r-2"
               type="text"
               placeholder="Enter Movie Name"
               value={input}
@@ -53,6 +47,7 @@ const App = () => {
           Search and Discover Movies
         </h1>
       </div>
+      <MovieList />
     </div>
   );
 };
