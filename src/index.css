@@ -6,3 +6,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .search-item {
+    @apply font-semibold cursor-pointer hover:text-gray-900;
+  }
+}
