@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 
 const MovieList = ({ movies }) => {
   return (
-    <div className="w-screen mt-7">
+    <div className="w-screen my-7">
       <h1 className="text-center font-bold text-4xl">
         Search Movies from Below
       </h1>

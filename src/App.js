@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios, { request } from "./axios";
 import Footer from "./components/Footer";
+import MovieDetails from "./components/MovieDetails";
 
 import MovieList from "./components/MovieList";
 
@@ -8,6 +9,8 @@ const App = () => {
   const [input, setInput] = useState("");
   const [movies, setMovies] = useState([]);
   const [suggestion, setSuggestion] = useState([]);
+
+  const [searchMovieDetail, setSearchMovieDetail] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -58,8 +61,11 @@ const App = () => {
             <input
               className="flex-grow font-bold bg-transparent outline-none md:w-64 border-r-2"
               type="text"
-              placeholder="Enter Movie Name"
+              placeholder={
+                searchMovieDetail ? "Input Disabled" : "Enter Movie Name"
+              }
               value={input}
+              disabled={searchMovieDetail}
               onChange={(e) => setInput(e.target.value)}
             />
             {suggestion.length > 0 && input.length > 0 ? (
@@ -80,13 +86,35 @@ const App = () => {
               </div>
             ) : null}
           </div>
-          <button className="text-blue-500 font-semibold">Search</button>
+          {searchMovieDetail ? (
+            <button
+              onClick={() => {
+                setSearchMovieDetail(!searchMovieDetail);
+              }}
+              className="text-red-500 font-semibold"
+            >
+              Go Back
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setSearchMovieDetail(!searchMovieDetail);
+              }}
+              className="text-blue-500 font-semibold"
+            >
+              Search
+            </button>
+          )}
         </div>
         <h1 className="hidden md:inline-block font-bold text-xl text-white">
           Search and Discover Movies
         </h1>
       </div>
-      <MovieList movies={movies} />
+      {searchMovieDetail ? (
+        <MovieDetails movies={movies} searchInput={input} />
+      ) : (
+        <MovieList movies={movies} />
+      )}
       <Footer />
     </div>
   );
