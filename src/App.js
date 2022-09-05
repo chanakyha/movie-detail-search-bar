@@ -113,7 +113,7 @@ const App = () => {
       {searchMovieDetail ? (
         <MovieDetails movies={movies} searchInput={input} />
       ) : (
-        <MovieList movies={movies} />
+        <MovieList setInput={setInput} movies={movies} />
       )}
       <Footer />
     </div>

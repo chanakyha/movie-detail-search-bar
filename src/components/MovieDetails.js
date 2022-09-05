@@ -15,7 +15,7 @@ const MovieDetails = ({ movies, searchInput }) => {
 
   return (
     <div>
-      <div className="absolute h-screen space-x-5 mt-10 lg:mt-0 flex w-screen justify-center items-start lg:items-center">
+      <div className="absolute md:h-screen space-x-5 mt-10 lg:mt-0 flex w-screen justify-center items-start lg:items-center">
         <img
           src={imageBaseUrl + movie?.poster_path}
           className="hidden shadow-lg md:block w-64 rounded-md"
