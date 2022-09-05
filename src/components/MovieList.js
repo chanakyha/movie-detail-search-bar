@@ -1,17 +1,7 @@
-import React, { useEffect, useState } from "react";
-import axios, { request } from "../axios";
+import React from "react";
 import MovieCard from "./MovieCard";
 
-const MovieList = () => {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const response1 = await axios.get(request + "&page=1");
-      setMovies(response1.data.results);
-    })();
-  }, []);
-
+const MovieList = ({ movies }) => {
   return (
     <div className="w-screen mt-7">
       <h1 className="text-center font-bold text-4xl">

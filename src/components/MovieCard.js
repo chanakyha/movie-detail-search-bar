@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { imageBaseUrl } from "../axios";
 
 const MovieCard = ({ movie }) => {
-  console.log(movie);
   const [detailsVisible, setDetailsVisible] = useState(false);
   return (
     <div>
@@ -14,6 +13,7 @@ const MovieCard = ({ movie }) => {
         <img
           src={imageBaseUrl + movie?.poster_path}
           alt="poster"
+          loading="lazy"
           onMouseEnter={() => setDetailsVisible(true)}
           onMouseLeave={() => setDetailsVisible(false)}
           className="hover:opacity-30 w-64 rounded-lg shadow-md hover:shadow-lg cursor-pointer hover:scale-105 duration-150 ease-out"

@@ -1,9 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios, { request } from "./axios";
+import Footer from "./components/Footer";
 
 import MovieList from "./components/MovieList";
 
 const App = () => {
   const [input, setInput] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [suggestion, setSuggestion] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const response1 = await axios.get(request + "&page=1");
+      setMovies(response1.data.results);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!movies) return;
+    if (!input) return;
+
+    let currentSuggestion = [];
+
+    for (let i = 0; i < movies.length; i++) {
+      if (movies[i].title.toUpperCase().indexOf(input.toUpperCase()) > -1) {
+        currentSuggestion.push(movies[i].title);
+      }
+
+      if (currentSuggestion.includes(input)) {
+        currentSuggestion = [];
+        break;
+      }
+    }
+
+    setSuggestion(currentSuggestion);
+  }, [input]);
 
   return (
     <div>
@@ -31,15 +62,23 @@ const App = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <div
-              className={`absolute ${
-                !input && "hidden"
-              } bg-white rounded-md text-gray-500 p-4 shadow-lg w-64 space-y-1`}
-            >
-              <p className="search-item"> 👉 Avengers</p>
-              <p className="search-item"> 👉 Thor</p>
-              <p className="search-item"> 👉 Captain America</p>
-            </div>
+            {suggestion.length > 0 && input.length > 0 ? (
+              <div
+                className={`absolute bg-white rounded-md text-gray-500 p-4 shadow-lg w-64 space-y-1`}
+              >
+                {suggestion?.map((sug, ind) => (
+                  <p
+                    key={ind}
+                    onClick={() => {
+                      setInput(sug);
+                    }}
+                    className="search-item"
+                  >
+                    👉 {sug}
+                  </p>
+                ))}
+              </div>
+            ) : null}
           </div>
           <button className="text-blue-500 font-semibold">Search</button>
         </div>
@@ -47,7 +86,8 @@ const App = () => {
           Search and Discover Movies
         </h1>
       </div>
-      <MovieList />
+      <MovieList movies={movies} />
+      <Footer />
     </div>
   );
 };
